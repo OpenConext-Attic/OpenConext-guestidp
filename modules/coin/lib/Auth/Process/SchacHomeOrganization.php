@@ -11,6 +11,11 @@
 class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_ProcessingFilter {
 
 	/**
+	 * Constant for the default schacHomeOrganization key
+	 */
+	const DEFAULT_SCHACHOMEORG = 'DEFAULT';
+
+	/**
 	 * Map with schacHomeOrganization - IDP mappings.
 	 *
 	 * Assiciative array of arrays.
@@ -74,6 +79,10 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
 			$schacHomeOrganization = $this->map[$authModule];
 			if (isset($schacHomeOrganization)) {
 				$attributes["schacHomeOrganization"] = $schacHomeOrganization;
+			}
+		} else {
+			if (array_key_exists(DEFAULT_SCHACHOMEORG, $this-> map)) {
+				$attributes["schacHomeOrganization"] = $this->map[DEFAULT_SCHACHOMEORG];
 			}
 		}
 	}

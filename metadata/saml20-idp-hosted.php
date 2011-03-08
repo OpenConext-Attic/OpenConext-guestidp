@@ -28,12 +28,11 @@ $metadata['__DYNAMIC:1__'] = array(
 	/* Uncomment the following to use the uri NameFormat on attributes. */
 	//'AttributeNameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
 	'authproc' => array(
-		150 => array('class' => 'core:AttributeMap', 'removeurnprefix'),
+		90 => array('class' => 'core:AttributeMap', 'removeurnprefix'),
 		100 => array('class' => 'core:AttributeMap', 'facebook2name'),
 		110 => array('class' => 'core:AttributeMap', 'openid2name'),
 		120 => array('class' => 'core:AttributeMap', 'twitter2name'),
-		130 => array('class' => 'core:AttributeAdd', 'schacHomeOrganization' => 'surfguestidp'),
-		135 => array('class' => 'coin:SetUid'),
+		130 => array('class' => 'coin:SetUid'),
 		140 => array('class' => 'coin:SchacHomeOrganization',
 			'facebook' => 'facebook.com',
 			'twitter' => 'twitter.com', 
@@ -41,7 +40,8 @@ $metadata['__DYNAMIC:1__'] = array(
 			'yahoo' => 'yahoo.com',
 			'hyves' => 'hyves',
 			'OpenID' => 'openid.net',
-			'SURFguest' => 'surfguest.nl'
+			'SURFguest' => 'surfguest.nl',
+			'DEFAULT' => 'surfguestidp'
 		),
 		145 => array('class' => 'core:AttributeLimit',
 			'uid', 'cn', 'displayName', 'mail', 'givenName', 'sn', 'schacHomeOrganization'),
