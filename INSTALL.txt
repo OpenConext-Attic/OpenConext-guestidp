@@ -1,0 +1,229 @@
+Copyright (C) 2010 SURFnet BV
+All rights reserved.
+
+RELEASE INFORMATION
+
+Project:           COIN
+Date:              2011-03-07
+
+Content:
+
+  0.  Introduction
+
+	1.  Prerequisites
+	
+	2.  Install GuestIdP
+		2.1 Checkout 'guestidp' from the COIN SVN
+		2.2 Create a virtual host for the GuestIdP
+	
+	3.  Configure GuestIdP
+    3.1 Configure Logging
+    3.2 Main config
+    3.3 Metadata
+		3.4 Facebook authentication
+		3.5 Twitter authentication
+		3.6 SURFguest authentication 
+
+
+0. INTRODUCTION
+===============
+
+The GuestIDP is a simplesamlphp instance that is used as an IDP for the SURFconext Portal. This IDP has configured
+a number of Authentication sources, such as Facebook, Twitter, OpenID, SURFguest, etc with which a user
+can log into the SURFconext Portal as a guest user.
+	
+1. PREREQUISITES
+================
+
+- RHEL 5.x required
+- Apache 2.x
+- PHP 5.2.x
+
+
+2. INSTALL GUESTIDP
+=================
+
+2.1 Checkout 'guestidp' from the COIN SVN
+
+This automatically installs all the components and gives you an almost out of the box experience.
+
+The following commands can be used to check out the trunk version of GuestIdP:
+
+cd /var/www/html
+svn checkout https://svn.surfnet.nl/svn/coin-os/coin-guestidp guestidp
+
+Where you naturally substitute /var/www/html for wherever you want to install the service registry.
+
+2.2 Create a virtual host for the GuestIdP
+
+You need to create an Apache vhost for the service registry's www directory. Also, an alias for 
+/simplesaml/ needs to be present, as this is required by the SimpleSAMLphp software which is the
+framework in which the GuestIdP is built. Below is an example vhost.
+You need to adapt this to match your environment.
+
+<Virtualhost *:443>
+        ServerAdmin admin@example.com
+        DocumentRoot /var/www/html/guestidp/www
+        ServerName guestidp.example.com
+ 
+        Alias /simplesaml /var/www/html/guestidp/www
+ 
+        SSLEngine on
+        SSLCertificateFile /etc/httpd/ssl/coin.pem
+        SSLCertificateKeyFile /etc/httpd/ssl/coin.key
+        SSLCertificateChainFile /etc/httpd/ssl/coin-chain.pem
+</VirtualHost>
+
+3. CONFIGURE GUESTIDP
+
+
+3.1 Logging
+
+In order to configure loggin, you have to create a directory for the logs.
+
+Create the 'coin' directory in /var/log:
+
+cd /var/log
+mkdir coin
+
+Make it read/writeable for the apache user.
+
+
+3.2 Main config
+
+Open the Simplesamlphp config file and change the following entries according to the environment.
+
+'debug'                     => FALSE,        
+'showerrors'                => FALSE,
+'auth.adminpassword'        => '<<admin_password>>',
+'admin.protectindexpage'    => TRUE,
+'secretsalt'                => '<<Secret salt>>', *
+'technicalcontact_name'     => 'Coin-Beheer',
+'technicalcontact_email'    => 'stein.welberg@everett.nl',
+'logging.level'             => LOG_ERR,
+'session.cookie.domain'     => '.dev.coin.surf.net',
+
+* Create a secret salt by executing the following command: tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo
+
+NB. 
+
+
+3.3 Metadata
+
+go to the metadata directory:
+
+cd /var/www/html/guestidp/metadata
+
+change the 'saml20-idp-remote.php' file:
+
+Add the SURFguest metadata. Retrieve the metadata from:
+https://espee.surfnet.nl/federate/metadata/saml20/SURFnetGuests
+
+Add the metadata to the bottom of the file in the following format:
+$metadata['SURFnetGuests'] = array (
+        'entityid' => 'SURFnetGuests',
+        'name' => array (
+                'nl' => 'SURFguest (test)',
+                'en' => 'SURFguest (test)',
+        ),
+        'description'           => 'SURFguest',
+        'SingleSignOnService'   => 'https://espee-test.surfnet.nl/federate/saml20/SURFnetGuests',
+        'SingleLogoutService'   => 'https://espee-test.surfnet.nl/federate/saml20',
+        'certData'              => 'MIIEHjCCAwagAwIBAgILAQAAAAABFg7hy6swDQYJKoZIhvcNAQEFBQAwXzELMAkGA1UEBhMCQkUx
+EzARBgNVBAoTCkN5YmVydHJ1c3QxFzAVBgNVBAsTDkVkdWNhdGlvbmFsIENBMSIwIAYDVQQDExlD
+eWJlcnRydXN0IEVkdWNhdGlvbmFsIENBMB4XDTA3MTEwNTA4MTYyN1oXDTEwMTEwNTA4MTYyN1ow
+TTELMAkGA1UEBhMCTkwxEDAOBgNVBAoTB1NVUkZuZXQxETAPBgNVBAsTCFNlcnZpY2VzMRkwFwYD
+VQQDExBlc3BlZS5zdXJmbmV0Lm5sMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIcRvAXwUW
+lE12NCkgPR9V6G90tu9C4gQ3cMGzF3b8fGg5A01/F7TcIMNohFFEee4GiYWmU5+xRZByQw5BXpSl
+qbDn/G3QSJqOcXzxcelWY8jlJUHx91ved6aSvDXZx5Jkv9wP1ZVOKWRfKOGENqwNQZeUEiKUhrYu
+5wEBsBpDMwIDAQABo4IBbzCCAWswUAYDVR0gBEkwRzBFBgcqhkixPgEAMDowOAYIKwYBBQUHAgEW
+LGh0dHA6Ly93d3cuZ2xvYmFsc2lnbi5uZXQvcmVwb3NpdG9yeS9jcHMuY2ZtMA4GA1UdDwEB/wQE
+AwIFoDAfBgNVHSMEGDAWgBRlZaM91zsRowoHJTfJQkpbdndQ4TAdBgNVHQ4EFgQUHZSyxc2114FH
+O3aPxNUz0xKzfDgwOgYDVR0fBDMwMTAvoC2gK4YpaHR0cDovL2NybC5nbG9iYWxzaWduLm5ldC9l
+ZHVjYXRpb25hbC5jcmwwTwYIKwYBBQUHAQEEQzBBMD8GCCsGAQUFBzAChjNodHRwOi8vc2VjdXJl
+Lmdsb2JhbHNpZ24ubmV0L2NhY2VydC9lZHVjYXRpb25hbC5jcnQwHQYDVR0lBBYwFAYIKwYBBQUH
+AwEGCCsGAQUFBwMCMBsGA1UdEQQUMBKCEGVzcGVlLnN1cmZuZXQubmwwDQYJKoZIhvcNAQEFBQAD
+ggEBAAojubZKLWWymxYMTmYUxpxm1Me1FPvd8HlmPg5gWdmbw8piO92thM9KROLpG/zK5GKC4Zvr
+sEPpvToCQpPVyEVf3DpCOJKOOIv3//a5BKuhWLTtzqJsAvIp2BS7e4p1GuKnYhOvlxf3pueAmJAd
+3Z2/V0VIpHhzCKehI1pvZr/P7auQplTWnbPplAcwvaLxvovpzhXRDXWPVqfjGBKlXvJQEIR8mXvO
+I/ZzU/5sZH7CAZstly5TVqn1MGodCZEdIMv2I9tj5k+dv3/Z/x2lm9QAmvvqVzzXlAXVg2kJZ5zW
+zr6qKeyUJsnOwtE2lGjexPGy2H0ezUpfFImKgOl4dWE='
+);
+
+Now change the 'saml20-sp-remote.php' 
+
+Add the Engineblock Metadata corresponding to the environment you are installing. Use the metadata below as an example. 
+
+# Testing EngineBlock - New
+$metadata['https://engineblock.dev.coin.surf.net/authentication/sp/metadata'] = array(
+        'AssertionConsumerService' => 'https://engineblock.dev.coin.surf.net/authentication/sp/consume-assertion',
+        'NameIDFormat' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+        'simplesaml.nameidattribute' => 'urn:mace:dir:attribute-def:uid',
+);
+
+
+3.4 Facebook Authentication
+
+In order to use the facebook authentication you must register a new application with Facebook. Browse to:
+http://www.facebook.com/developers
+
+Click on + Set up New App to create a new application.
+
+Enter the following information in the application:
+
+About tab:
+App name: GuestIdP SURFnet (DEV) (Replace dev with the environment you are working on)
+Description: 
+icon: download the SURFnet icon from https://espee.surfnet.nl/favicon.ico
+Logo: Download the SURFnet logo from https://espee.surfnet.nl/federate/surfnet/img/logo/surfnet.jpg
+Language: EN
+Contact Email: coin-beheer@surfnet.nl
+Privacy Policy URL:
+User Agreement URL:
+
+Web site tab:
+Site URL: https://guestidp.dev.coin.surf.net/simplesaml/module.php/authfacebook/linkback.php?next (make sure to replace the domain with the domain corresponding to you environment)
+Site Domain: guestidp.dev.coin.surf.net
+
+After you have registered your application with Facebook, copy the API-key and App secret.
+
+Paste these values into the appropriate section of the 'authsources.php' file located at:
+/var/www/html/guestidp/config
+
+Look for 'facebook' => array(. Replace the current api_key and secret with the values you have obtained from your Facebook application.
+
+
+3.5 Twitter Authentication
+
+The Twitter authentication setup is similar to the facebook authentication setup. You once again have to register an application.
+go to: http://twitter.com/apps and click on 'Register a new Application'.
+
+Enter the following information:
+
+Application name: GuestIdP SURFnet (DEV) (Replace dev with the environment you are working on)
+Description: SURFnet Guest Identity Provider
+Application website: https://gui.dev.coin.surf.net/coin (the SURFconext portal url)
+Organization: SURFnet B.V.
+Website: http://www.surfnet.nl
+Application type: Browser
+Callback URL: https://guestidp.dev.coin.surf.net/simplesaml/module.php/authtwitter/linkback.php (make sure to replace the domain with the domain corresponding to you environment)
+Default Access Type: Read-only
+Use Twitter for Login: Yes
+
+After you have registered your application with Twitter, copy the key and secret.
+
+Paste these values into the appropriate section of the 'authsources.php' file located at:
+/var/www/html/guestidp/config
+
+Look for 'twitter' => array(. Replace the current key and secret with the values you have obtained from your Twitter application.
+
+
+3.6 SURFguest authentication
+
+Register the guestidp metadata with SURFguest in order to use SURFguest as an IDP for the guestidp. To obtain the metadata browse to: 
+https://guestidp.dev.coin.surf.net/simplesaml
+
+Click on the 'Federation' tab.
+Next, click on 'Show metadata' under the SAML 2.0 SP Metadata heading.
+
+Copy the dedicated URL and provide this to espee-beheer@surfnet.nl to let them register it.
