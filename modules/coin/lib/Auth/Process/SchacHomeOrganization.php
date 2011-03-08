@@ -71,20 +71,27 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
 			$authId = $authStage[0] . ':AuthId';
 			$authModule = $request[$authId];
 		}
+                
+                if (!$authModule) {
+                    throw new Exception("Auth module not found?!?!");
+                }
+		echo '<pre>'; print_r($request); die();
 
 		$attributes =& $request['Attributes'];
 
 		// Set or replace the schacHomeOrganization attribute
-		if ($authModule !== NULL && array_key_exists($authModule, $this->map)) {
+		if (array_key_exists($authModule, $this->map)) {
 			$schacHomeOrganization = $this->map[$authModule];
 			if (isset($schacHomeOrganization)) {
 				$attributes["schacHomeOrganization"] = $schacHomeOrganization;
+                                return;
 			}
-		} else {
-			if (array_key_exists(DEFAULT_SCHACHOMEORG, $this-> map)) {
-				$attributes["schacHomeOrganization"] = $this->map[DEFAULT_SCHACHOMEORG];
-			}
+		} 
+
+		if (array_key_exists(DEFAULT_SCHACHOMEORG, $this->map)) {
+                    throw new Exception("No default schacHomeOrganization?!?");
 		}
+		$attributes["schacHomeOrganization"] = $this->map[DEFAULT_SCHACHOMEORG];
 	}
 }
 

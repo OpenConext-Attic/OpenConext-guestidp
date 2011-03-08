@@ -11,22 +11,7 @@
 class sspmod_coin_Auth_Process_SetUid extends SimpleSAML_Auth_ProcessingFilter {
 
 	/**
-	 * Initialize this filter.
-	 *
-	 * @param array $config  Configuration information about this filter.
-	 * @param mixed $reserved  For future use.
-	 */
-	public function __construct($config, $reserved) {
-		parent::__construct($config, $reserved);
-
-		//assert('is_array($config)');
-		// Config is not used atm.
-
-	}
-
-
-	/**
-	 * Apply filter to add the SchacHomeOrganization attribute.
+	 * Apply filter to add the UID attribute.
 	 *
 	 * @param array &$request  The current request
 	 */
