@@ -28,6 +28,7 @@ $metadata['__DYNAMIC:1__'] = array(
 	/* Uncomment the following to use the uri NameFormat on attributes. */
 	//'AttributeNameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
 	'authproc' => array(
+		150 => array('class' => 'core:AttributeMap', 'removeurnprefix'),
 		100 => array('class' => 'core:AttributeMap', 'facebook2name'),
 		110 => array('class' => 'core:AttributeMap', 'openid2name'),
 		120 => array('class' => 'core:AttributeMap', 'twitter2name'),

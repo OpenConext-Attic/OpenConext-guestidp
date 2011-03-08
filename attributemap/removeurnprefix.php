@@ -17,6 +17,11 @@ $attributemap = array(
 	'urn:mace:dir:attribute-def:eduPersonEntitlement' => 'eduPersonEntitlement',
 	'urn:mace:dir:attribute-def:eduPersonOrgDN' => 'eduPersonOrgDN',
 	'urn:mace:dir:attribute-def:eduPersonOrgUnitDN' => 'eduPersonOrgUnitDN',
+        'urn:mace:terena.org:attribute-def:schacHomeOrganization' => 'schacHomeOrganization',
+        'urn:mace:dir:attribute-def:uid' => 'uid',
+        'urn:mace:dir:attribute-def:cn' => 'cn',
+        'urn:mace:dir:attribute-def:displayName' => 'displayName',
+
 );
 
 ?>
