@@ -75,7 +75,6 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
                 if (!$authModule) {
                     throw new Exception("Auth module not found?!?!");
                 }
-		echo '<pre>'; print_r($request); die();
 
 		$attributes =& $request['Attributes'];
 
