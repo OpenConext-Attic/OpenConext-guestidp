@@ -67,12 +67,12 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
 		
 		// Fetch Auth module
 		if(array_key_exists("SimpleSAML_Auth_State.stage", $request)) {
-			$authStage = explode(':', $request["SimpleSAML_Auth_State.stage"]);
-			$authId = $authStage[0] . ':AuthId';
+			$authStage = implode(":", array_slice(explode(':', $request["SimpleSAML_Auth_State.stage"]), 0, -1));
+			$authId = $authStage . ':AuthId';
 			$authModule = $request[$authId];
 		}
                 
-                if (!$authModule) {
+                if (!isset($authModule)) {
                     throw new Exception("Auth module not found?!?!");
                 }
 

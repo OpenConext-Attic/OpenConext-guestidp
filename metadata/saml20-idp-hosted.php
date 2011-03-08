@@ -40,7 +40,7 @@ $metadata['__DYNAMIC:1__'] = array(
 			'yahoo' => 'yahoo.com',
 			'hyves' => 'hyves.nl',
 			'OpenID' => 'openid.net',
-			'SURFguest' => 'surfguest.nl',
+			'SURFguest' => 'test.surfguest.nl',
 			'DEFAULT' => 'surfguestidp'
 		),
 		145 => array('class' => 'core:AttributeLimit',
