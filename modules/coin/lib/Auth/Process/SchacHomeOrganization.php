@@ -62,7 +62,7 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
 	public function process(&$request) {
 		assert('is_array($request)');
 		assert('array_key_exists("Attributes", $request)');
-	
+
 		$authModule = NULL;
 		
 		// Fetch Auth module
@@ -71,7 +71,15 @@ class sspmod_coin_Auth_Process_SchacHomeOrganization extends SimpleSAML_Auth_Pro
 			$authId = $authStage . ':AuthId';
 			$authModule = $request[$authId];
 		}
-                
+		else if (isset($request['AuthnInstant']) && isset($request['Expire'])) {
+                	// Probably dealing with a cached response
+                	$cachedAuthModule = SimpleSAML_Session::getInstance()->getData(sspmod_multiauth_Auth_Source_MultiAuth::SESSION_SOURCE, 'multi');
+			if ($cachedAuthModule) {
+				$authModule = $cachedAuthModule;
+			}
+                }
+	
+
                 if (!isset($authModule)) {
                     throw new Exception("Auth module not found?!?!");
                 }
