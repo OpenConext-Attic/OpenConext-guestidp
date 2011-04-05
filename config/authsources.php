@@ -177,22 +177,26 @@ $config = array(
 		'secret' => 'xrPfX5J4VldAjWc6MaksUz6VU7AQLE8al39UTndDj4',
 	),
 
-        'SURFguest' => array(
-                'saml:SP',
-
-                // The entity ID of this SP.
-                // Can be NULL/unset, in which case an entity ID is generated based on the metadata URL.
-                'entityID' => NULL,
-
-                // The entity ID of the IdP this should SP should contact.
-                // Can be NULL/unset, in which case the user will be shown a list of available IdPs.
-                'idp' => 'SURFnetGuests',
-
-                // The URL to the discovery service.
-                // Can be NULL/unset, in which case a builtin discovery service will be used.
-                'discoURL' => NULL,
-        ),
-
+# Turned off because SURFguest may house non-guests so EngineBlock can't just say that everyone from the guestidp is either
+# a guest or everyone is a full member, instead it would have to rely on the guestidp determining it's own surfPersonAffiliation.
+# And this is not in scope for now.
+# 
+#        'SURFguest' => array(
+#                'saml:SP',
+#
+#                // The entity ID of this SP.
+#                // Can be NULL/unset, in which case an entity ID is generated based on the metadata URL.
+#                'entityID' => NULL,
+#
+#                // The entity ID of the IdP this should SP should contact.
+#                // Can be NULL/unset, in which case the user will be shown a list of available IdPs.
+#                'idp' => 'SURFnetGuests',
+#
+#                // The URL to the discovery service.
+#                // Can be NULL/unset, in which case a builtin discovery service will be used.
+#                'discoURL' => NULL,
+#        ),
+#
 	'multi' => array(
 		'multiauth:MultiAuth',
 
@@ -200,7 +204,7 @@ $config = array(
 		 * The available authentication sources.
 		 * They must be defined in this authsources.php file.
 		*/
-		'sources' => array('facebook', 'twitter', 'google', 'yahoo', 'hyves', 'SURFguest'),
+		'sources' => array('facebook', 'twitter', 'google', 'yahoo', 'hyves'),
 	),
 
 	/*
