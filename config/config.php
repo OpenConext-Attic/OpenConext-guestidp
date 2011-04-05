@@ -69,7 +69,7 @@ $config = array (
 	 * also as the technical contact in generated metadata.
 	 */
 	'technicalcontact_name'     => 'Coin-Beheer',
-	'technicalcontact_email'    => 'stein.welberg@everett.nl',
+	'technicalcontact_email'    => 'unix@prolocation.net',
 
 	/*
 	 * The timezone of the server. This option should be set to the timezone you want
@@ -95,7 +95,7 @@ $config = array (
 	 * Options: [syslog,file,errorlog]
 	 * 
 	 */
-	'logging.level'         => LOG_DEBUG,
+	'logging.level'         => LOG_ERR,
 	'logging.handler'       => 'file',
 
 	/*
@@ -179,7 +179,7 @@ $config = array (
 	 * Example:
 	 *  'session.cookie.domain' => '.example.org',
 	 */
-	'session.cookie.domain' => '.dev.coin.surf.net',
+	'session.cookie.domain' => '.dev.surfconext.nl',
 
 	/*
 	 * Set the secure flag in the cookie.
