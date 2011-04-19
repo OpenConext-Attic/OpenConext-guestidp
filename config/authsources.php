@@ -328,3 +328,10 @@ $config = array(
 	*/
 
 );
+
+$localConfig = dirname(__FILE__) . '/../../configs/guestidp.authsources.config.php';
+if (!file_exists($localConfig)) {
+    die('[guestidp] Local Config file (guestidp.authsources.config.php) required!'); 
+}
+
+require $localConfig;
