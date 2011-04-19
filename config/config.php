@@ -13,7 +13,7 @@ $config = array (
 	 */
 	'baseurlpath'           => 'simplesaml/',
 	'certdir'               => 'cert/',
-	'loggingdir'            => '/var/log/coin/',
+	'loggingdir'            => 'log/',
 	'datadir'               => 'data/',
 
 	/*
@@ -95,8 +95,8 @@ $config = array (
 	 * Options: [syslog,file,errorlog]
 	 * 
 	 */
-	'logging.level'         => LOG_ERR,
-	'logging.handler'       => 'file',
+	'logging.level'         => LOG_NOTICE,
+	'logging.handler'       => 'syslog',
 
 	/*
 	 * Choose which facility should be used when logging with syslog.
@@ -554,3 +554,8 @@ $config = array (
 	'proxy' => NULL,
 
 );
+
+$localConfig = dirname(__FILE__) . '/config.local.php';
+if (file_exists($localConfig)) {
+    require $localConfig;
+}
