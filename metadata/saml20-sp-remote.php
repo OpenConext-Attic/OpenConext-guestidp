@@ -6,9 +6,13 @@
  */
 
 # Testing EngineBlock - New
-$metadata['https://engineblock.dev.coin.surf.net/authentication/sp/metadata'] = array(
-        'AssertionConsumerService' => 'https://engineblock.dev.coin.surf.net/authentication/sp/consume-assertion',
+$metadata['https://engine.surfconext.nl/authentication/sp/metadata'] = array(
+        'AssertionConsumerService' => 'https://engine.surfconext.nl/authentication/sp/consume-assertion',
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
         'simplesaml.nameidattribute' => 'urn:mace:dir:attribute-def:uid',
 );
-?>
+
+$localConfig = '/etc/surfconext/guestidp.saml20-sp-remote.php';
+if (file_exists($localConfig)) {
+    require $localConfig;
+}

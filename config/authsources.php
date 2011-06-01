@@ -329,9 +329,7 @@ $config = array(
 
 );
 
-$localConfig = dirname(__FILE__) . '/../../configs/guestidp.authsources.config.php';
-if (!file_exists($localConfig)) {
-    die('[guestidp] Local Config file (guestidp.authsources.config.php) required!'); 
+$localConfig = '/etc/surfconext/guestidp.authsources.config.php';
+if (file_exists($localConfig)) {
+    require $localConfig;
 }
-
-require $localConfig;
