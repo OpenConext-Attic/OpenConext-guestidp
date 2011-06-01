@@ -554,3 +554,8 @@ $config = array (
 	'proxy' => NULL,
 
 );
+
+$localConfig = '/etc/surfconext/guestidp.config.php';
+if (file_exists($localConfig)) {
+    require $localConfig;
+}

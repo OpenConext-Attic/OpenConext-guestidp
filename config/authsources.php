@@ -328,3 +328,8 @@ $config = array(
 	*/
 
 );
+
+$localConfig = '/etc/surfconext/guestidp.authsources.config.php';
+if (file_exists($localConfig)) {
+    require $localConfig;
+}
