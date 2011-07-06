@@ -11,27 +11,32 @@ $this->includeAtTemplateBase('includes/coin-header.php');
 <script type="text/javascript">
 var gIDP = {
 <?php
+$sourcesLength = count($this->data['sources']);
+$count = 0;
+$separator = ',';
 foreach($this->data['sources'] as $source) {
-	if ($source == 'facebook') {
-		echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.facebook.com">Facebook</a> account.\', img: \'/resources/logos/facebook-logo.jpg\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
-	} else if ($source == 'OpenID') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.openid.net">OpenID</a> account.\', img: \'/resources/logos/openid-logo.gif\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+        $separator = $sourcesLength == $count+1 ? '' : ',';
+        if ($source == 'facebook') {
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.facebook.com">Facebook</a> account.\', \'img\': \'/resources/logos/facebook-logo.jpg\', \'url\': \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator ;
+        } else if ($source == 'OpenID') {
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.openid.net">OpenID</a> account.\', \'img\': \'/resources/logos/openid-logo.gif\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         } else if ($source == 'google') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.google.com">Google</a> account.\', img: \'/resources/logos/google-logo.png\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.google.com">Google</a> account.\', \'img\': \'/resources/logos/google-logo.png\', \'url\': \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         } else if ($source == 'hyves') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.hyves.nl">Hyves</a> account.\', img: \'/resources/logos/hyves-logo.jpg\', url: \'?source=' . htmlspecialchars(
-$source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.hyves.nl">Hyves</a> account.\', \'img\': \'/resources/logos/hyves-logo.jpg\', \'url\': \'?source=' . htmlspecialchars(
+$source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         } else if ($source == 'yahoo') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.yahoo.com">Yahoo</a> account.\', img: \'/resources/logos/yahoo-logo.png\', url: \'?source=' . htmlspecialchars(
-$source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.yahoo.com">Yahoo</a> account.\', \'img\': \'/resources/logos/yahoo-logo.png\', \'url\': \'?source=' . htmlspecialchars(
+$source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         } else if ($source == 'twitter') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="http://www.twitter.com">Twitter</a> account.\', img: \'/resources/logos/twitter-logo.png\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="http://www.twitter.com">Twitter</a> account.\', \'img\': \'/resources/logos/twitter-logo.png\', \'url\': \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         } else if ($source == 'SURFguest') {
-                echo '\'' . $source . '\': {text: \'Login with your <a href="https://www.surfguest.nl">SURFguest</a> account.\', img: \'/resources/logos/surfnet-logo.jpg\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your <a href="https://www.surfguest.nl">SURFguest</a> account.\', \'img\': \'/resources/logos/surfnet-logo.jpg\', \'url\': \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
 
         } else {
-                echo '\'' . $source . '\': {text: \'Login with your account\', url: \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'},';
+                echo '\'' . $source . '\': {\'text\': \'Login with your account\', \'url\': \'?source=' . htmlspecialchars($source) . '&AuthState=' . htmlspecialchars($this->data['authstate']) . '\'}' . $separator;
         }
+        $count++;
 }
 ?>
 };
