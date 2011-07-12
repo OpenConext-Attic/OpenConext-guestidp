@@ -179,7 +179,7 @@ $config = array (
 	 * Example:
 	 *  'session.cookie.domain' => '.example.org',
 	 */
-	'session.cookie.domain' => '.dev.surfconext.nl',
+	'session.cookie.domain' => null,
 
 	/*
 	 * Set the secure flag in the cookie.
