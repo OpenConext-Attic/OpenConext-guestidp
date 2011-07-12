@@ -196,7 +196,12 @@ $config = array (
 	'session.phpsession.cookiename'  => 'GuestIdP_SSO',
 	'session.phpsession.savepath'    => null,
 	'session.phpsession.httponly'    => FALSE,
-	
+
+	/*
+	 * Option to override the default settings for the auth token cookie
+	 */
+	'session.authtoken.cookiename' => 'GIdP_SimpleSAMLAuthToken',
+
 	/*
 	 * Languages available and what language is default
 	 */
