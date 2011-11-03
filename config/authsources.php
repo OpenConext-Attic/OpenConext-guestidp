@@ -204,7 +204,7 @@ $config = array(
 		 * The available authentication sources.
 		 * They must be defined in this authsources.php file.
 		*/
-		'sources' => array('facebook', 'twitter', 'google', 'yahoo', 'hyves'),
+		'sources' => array('facebook', 'google', 'yahoo', 'hyves'),
 	),
 
 	/*
